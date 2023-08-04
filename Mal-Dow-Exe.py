@@ -60,11 +60,10 @@ for url_list in csv_list:
         print("\n########## Url isn't available ! ##########")
         
 print("\n")
-print("1 min later it will let you know how much files are left")
+print("0.5 min later it will let you know how much files are left")
 time_count = 0
-for time in range(0,60):
+for seconds in range(0,30):
     time_count += 1
-    
     print(f"Seconds {time_count}", end="\r")
     time.sleep(1)
 
