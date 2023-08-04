@@ -65,6 +65,14 @@ for url_list in csv_list:
 
 yes_choice = "YES"
 no_choice = "NO"
+file_list = []
 
-#if file_exe_validation == yes_choice:
-    
+if file_exe_validation == yes_choice:
+    for filename in os.listdir(download_path):
+        f = os.path.join(download_path, filename)
+        if os.path.isfile(f):
+            file_list.append(f)
+else:
+    print("Stop")
+
+print(file_list)
