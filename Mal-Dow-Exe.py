@@ -4,6 +4,7 @@ import csv
 import os
 import wget
 import requests
+import time
 
 file_exe_validation = input("please say Yes or No in uppercase Letters to automatic executing the samples: ")
 vali_choices = ["NO","YES"]
@@ -57,22 +58,25 @@ for url_list in csv_list:
         wget.download(url_list[0], download_path)
     else: 
         print("\n########## Url isn't available ! ##########")
-
-#################### File Counter wie viele datei noch da sind von den Samples ####################################
-
-###################################################################################################################
-
+        
+print("\n")
+print("1 min later it will let you know how much files are left")
+time_count = 0
+for time in range(0,60):
+    time_count += 1
+    
+    print(f"Seconds {time_count}", end="\r")
+    time.sleep(1)
 
 yes_choice = "YES"
 no_choice = "NO"
 file_list = []
 
-if file_exe_validation == yes_choice:
-    for filename in os.listdir(download_path):
-        f = os.path.join(download_path, filename)
-        if os.path.isfile(f):
-            file_list.append(f)
-else:
-    print("Stop")
+for filename in os.listdir(download_path):
+    f = os.path.join(download_path, filename)
+    if os.path.isfile(f):
+        file_list.append(f)
+        
+files_left = len(file_list)
 
-print(file_list)
+print(f"There are {files_left} files left in the directory !")
