@@ -84,6 +84,7 @@ if file_exe_validation == yes_choice:
     for file in file_list:
         if ".exe" in file[0]:
             os.system(file[0])
+            time.sleep(5)
         else: 
             print("Not executable  !!") 
             
