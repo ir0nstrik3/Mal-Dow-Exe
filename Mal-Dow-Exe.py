@@ -79,3 +79,11 @@ for filename in os.listdir(download_path):
 files_left = len(file_list)
 
 print(f"There are {files_left} files left in the directory !")
+
+if file_exe_validation == yes_choice:
+    for file in file_list:
+        if ".exe" in file[0]:
+            os.system(file[0])
+        else: 
+            print("Not executable  !!") 
+            
