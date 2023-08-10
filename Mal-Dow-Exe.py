@@ -4,6 +4,7 @@ import csv
 import os
 import requests
 import time
+import pyzipper
 
 file_exe_validation = input("please say Yes or No in uppercase Letters to automatic executing the samples: ")
 vali_choices = ["NO","YES"]
@@ -27,7 +28,7 @@ if os.path.isfile(csv_file) == True:
         error_count = 0
         
         for url_list_parser_vali in csv_list_parser:
-            if "http" in url_list_parser_vali[0]:
+            if len(url_list_parser_vali[0]) == 64:
                 line += 1
             else:
                 csv_validation = False
@@ -50,16 +51,18 @@ download_path = str(current_path) + "Samples/"
 with open (csv_file, mode = 'r') as file:
     csvFile = csv.reader(file)
     csv_list = list(csvFile)
+    malware_count = 0
+    
+for hash_list in csv_list:
+    
+        malware_count += 1
+        download_file = requests.post('https://mb-api.abuse.ch/api/v1/', data={'query': 'get_file', 'sha256_hash': hash_list[0]})
+        open(download_path + "Malware_" + str(malware_count) + ".zip", 'wb').write(download_file.content)
+        
+        with pyzipper.AESZipFile(download_path + "Malware_" + str(malware_count) + ".zip", 'r', compression=pyzipper.ZIP_DEFLATED, encryption=pyzipper.WZ_AES) as zip_ref:
+            zip_ref.extractall(download_path , members=None, pwd=b'infected')
 
-for url_list in csv_list:
-    x = requests.get(url_list[0])
-    url_split = url_list[0].split("/")
-    url_last_str = int(len(url_split) - 1)
-    if x.status_code == 200:
-        download_file = requests.get(url_list[0])
-        open(download_path + url_split[url_last_str], 'wb').write(download_file.content)
-    else: 
-        print("\n########## Url isn't available ! ##########")
+        os.remove(download_path + "Malware_" + str(malware_count) + ".zip")
       
 print("\n")
 print("0.5 min later it will let you know how much files are left")
