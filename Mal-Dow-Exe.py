@@ -55,14 +55,16 @@ with open (csv_file, mode = 'r') as file:
     
 for hash_list in csv_list:
     
-        malware_count += 1
-        download_file = requests.post('https://mb-api.abuse.ch/api/v1/', data={'query': 'get_file', 'sha256_hash': hash_list[0]})
-        open(download_path + "Malware_" + str(malware_count) + ".zip", 'wb').write(download_file.content)
+    malware_count += 1
+    download_file = requests.post('https://mb-api.abuse.ch/api/v1/', data={'query': 'get_file', 'sha256_hash': hash_list[0]})
+    open(download_path + "Malware_" + str(malware_count) + ".zip", 'wb').write(download_file.content)
         
-        with pyzipper.AESZipFile(download_path + "Malware_" + str(malware_count) + ".zip", 'r', compression=pyzipper.ZIP_DEFLATED, encryption=pyzipper.WZ_AES) as zip_ref:
-            zip_ref.extractall(download_path , members=None, pwd=b'infected')
+    with pyzipper.AESZipFile(download_path + "Malware_" + str(malware_count) + ".zip", 'r', compression=pyzipper.ZIP_DEFLATED, encryption=pyzipper.WZ_AES) as zip_ref:
+        zip_ref.extractall(download_path , members=None, pwd=b'infected')
 
-        os.remove(download_path + "Malware_" + str(malware_count) + ".zip")
+    os.remove(download_path + "Malware_" + str(malware_count) + ".zip")
+    print(f"file {malware_count} of {len(csv_list)} is downloaded now !", end="\r")
+    time.sleep(0.5)
       
 print("\n")
 print("0.5 min later it will let you know how much files are left")
