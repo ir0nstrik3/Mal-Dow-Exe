@@ -2,7 +2,6 @@
 
 import csv
 import os
-import wget
 import requests
 import time
 
@@ -54,11 +53,14 @@ with open (csv_file, mode = 'r') as file:
 
 for url_list in csv_list:
     x = requests.get(url_list[0])
-    if x.status_code == 200 :
-        wget.download(url_list[0], download_path)
+    url_split = url_list[0].split("/")
+    url_last_str = int(len(url_split) - 1)
+    if x.status_code == 200:
+        download_file = requests.get(url_list[0])
+        open(download_path + url_split[url_last_str], 'wb').write(download_file.content)
     else: 
         print("\n########## Url isn't available ! ##########")
-        
+      
 print("\n")
 print("0.5 min later it will let you know how much files are left")
 time_count = 0
