@@ -10,7 +10,7 @@ file_exe_validation = input("please say Yes or No in uppercase Letters to automa
 vali_choices = ["NO","YES"]
 
 while file_exe_validation not in vali_choices:
-    file_exe_validation = input("please say Yes or No in uppercase Letters to automatic executing the samples: ")
+    file_exe_validation = input("please say Yes or No in uppercase Letters to automatic executing the samples: ", end="\r")
 
 
 csv_file = input("please set the path to csv file: ")
@@ -18,7 +18,7 @@ csv_validation = False
 line = 0
 
 while os.path.isfile(csv_file) == False and ".csv" not in csv_file:
-   csv_file = input("please set the path to csv file again !: ")
+   csv_file = input("please set the path to csv file again !: ", end="\r")
 
 if os.path.isfile(csv_file) == True:
 
@@ -86,11 +86,13 @@ for filename in os.listdir(download_path):
 files_left = len(file_list)
 
 print(f"There are {files_left} files left in the directory !")
-
+file_exe_count = 1
 if file_exe_validation == yes_choice:
     for file in file_list:
-        if ".exe" in file[0]:
+        if ".exe" in str(file[0]):
+            file_exe_count += 1
             os.system(file[0])
+            print(f"file {file_exe_count} is executed !", end="\r")
             time.sleep(5)
         else: 
             print("Not executable  !!") 
