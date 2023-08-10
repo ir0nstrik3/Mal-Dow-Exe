@@ -6,11 +6,11 @@ import requests
 import time
 import pyzipper
 
-file_exe_validation = input("please say Yes or No in uppercase Letters to automatic executing the samples: ")
+file_exe_validation = input("\033[1;31;40m please say Yes or No in uppercase Letters to automatic executing the samples: \033[0;0m")
 vali_choices = ["NO","YES"]
 
 while file_exe_validation not in vali_choices:
-    file_exe_validation = input("please say Yes or No in uppercase Letters to automatic executing the samples: ", end="\r")
+    file_exe_validation = input("\033[1;31;40m please say Yes or No in uppercase Letters to automatic executing the samples: \033[0;0m")
 
 
 csv_file = input("please set the path to csv file: ")
@@ -18,7 +18,7 @@ csv_validation = False
 line = 0
 
 while os.path.isfile(csv_file) == False and ".csv" not in csv_file:
-   csv_file = input("please set the path to csv file again !: ", end="\r")
+   csv_file = input("please set the path to csv file again !: ")
 
 if os.path.isfile(csv_file) == True:
 
