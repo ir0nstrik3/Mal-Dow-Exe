@@ -84,6 +84,7 @@ for filename in os.listdir(download_path):
         file_list.append(f)
         
 files_left = len(file_list)
+no_executable_count = 0
 
 print(f"There are {files_left} files left in the directory !")
 file_exe_count = 1
@@ -94,6 +95,7 @@ if file_exe_validation == yes_choice:
             os.system(file[0])
             print(f"file {file_exe_count} is executed !", end="\r")
             time.sleep(5)
-        else: 
-            print("Not executable  !!") 
+        else:
+            no_executable_count += 1
+            print(f"Not executable files {no_executable_count}  !!", end="\r") 
             
