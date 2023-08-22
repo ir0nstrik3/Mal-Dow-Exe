@@ -6,16 +6,19 @@ import time
 import pyzipper
 import json
 
-file_exe_validation = input("\033[1;31;40m please say Yes or No in uppercase Letters to automatic executing the samples: \033[0;0m")
+file_exe_validation = input("please say Yes or No in uppercase Letters to automatic executing the samples: ")
 vali_choices = ["NO","YES"]
 
 while file_exe_validation not in vali_choices:
-    file_exe_validation = input("\033[1;31;40m please say Yes or No in uppercase Letters to automatic executing the samples: \033[0;0m")
+    file_exe_validation = input("please say Yes or No in uppercase Letters to automatic executing the samples: ")
 
 malware_samples = input("please set a valid number of malware samples you want to download: ")
 
 while malware_samples.isnumeric() == False:
     malware_samples = input("please set a valid number of malware samples you want to download: ")
+    
+malware_types = [["1","exe"],["2","doc"],["3","xlxs"],["4","dll"],["5","msi"],["6","ps1"]]
+malware_types 
            
 current_path = str(os.path.dirname(os.path.realpath(__file__))) + "/"
 dir_name = "Samples"
