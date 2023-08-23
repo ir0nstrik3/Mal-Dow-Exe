@@ -20,14 +20,14 @@ while file_exe_validation not in vali_choices:
     file_exe_validation = input("please say Yes or No in uppercase Letters to automatic executing the samples: ")
     clear_console()
     
-malware_samples = input("please set a valid number of malware samples you want to download: ")
-clear_console()
+# malware_samples = input("please set a valid number of malware samples you want to download from each type : ")
+# clear_console()
 
-while malware_samples.isnumeric() == False:
-    malware_samples = input("please set a valid number of malware samples you want to download: ")
-    clear_console()
+#while malware_samples.isnumeric() == False:
+#    malware_samples = input("please set a valid number of malware samples you want to download: ")
+#    clear_console()
     
-malware_types = ["exe", "doc", "xlxs", "dll", "msi", "ps1"]
+malware_types = ["exe", "doc", "xls", "dll", "msi", "ps1"]
 select_types = []
 
 
@@ -92,9 +92,28 @@ clear_console()
 print("Your selected Malware Type's")            
 for i, option in enumerate(select_types):
     print(f"{i + 1}: {option}")
-            
+time.sleep(2)
 
-           
+clear_console()
+
+samples_amount = []
+
+for sample in select_types:
+    amount_input = input(f"How much Smaples of {sample}'s do you want: ")
+    clear_console()
+    while amount_input.isnumeric() == False:
+        amount_input = input(f"How much Smaples of {sample}'s do you want: ")
+        clear_console()
+    samples_amount.append(amount_input)
+    
+for sample, i in zip(select_types,samples_amount):
+    print(f"for type {sample} you choose {i} sample's")
+
+time.sleep(5)
+clear_console()
+
+print("wait some time ...")         
+       
 current_path = str(os.path.dirname(os.path.realpath(__file__))) + "/"
 dir_name = "Samples"
 
@@ -105,21 +124,27 @@ if os.path.isdir(current_path + dir_name) != True:
 
 download_path = str(current_path) + "Samples/"
 
-for i in select_types:
-    download_file_json = requests.post('https://mb-api.abuse.ch/api/v1/', data={'query': 'get_file_type', 'file_type': i, 'limit': malware_samples})
-    open(download_path + "Malware_samples" + str(i) + ".json", 'wb').write(download_file_json.content)
-
+for sample, number in zip(select_types, samples_amount):
+    download_file_json = requests.post('https://mb-api.abuse.ch/api/v1/', data={'query': 'get_file_type', 'file_type': sample, 'limit': number})
+    open(download_path + "Malware_samples_" + str(sample) + ".json", 'wb').write(download_file_json.content)
+    time.sleep(5)
 malware_sha256_hash_list = []
 
-json_file = open(download_path + "Malware_samples.json")
-json_data = json.load(json_file)
-for i in json_data['data']:
-    malware_sha256_hash_list.append(i['sha256_hash'])
-json_file.close()
 
+for samples in select_types:
+    json_file = open(download_path + "Malware_samples_" + str(samples) + ".json")
+    try:
+        json_data = json.load(json_file)
+        for i in json_data['data']:
+            malware_sha256_hash_list.append(i['sha256_hash'])
+        json_file.close()
+    except ValueError:
+        print("in one jason was an error and was skipped !")
+
+  
 malware_count = 0
 
-while malware_count < int(malware_samples):
+while malware_count < int(len(malware_sha256_hash_list)):
     sha256 = malware_sha256_hash_list[malware_count]
     download_file = requests.post('https://mb-api.abuse.ch/api/v1/', data={'query': 'get_file', 'sha256_hash': sha256})
     open(download_path + "Malware_" + str(malware_count) + ".zip", 'wb').write(download_file.content)
@@ -128,11 +153,14 @@ while malware_count < int(malware_samples):
         zip_ref.extractall(download_path , members=None, pwd=b'infected')
 
     os.remove(download_path + "Malware_" + str(malware_count) + ".zip")
+    malware_count += 1
+    
     print(f"file {malware_count} of {len(malware_sha256_hash_list)} is downloaded now !", end="\r")
     time.sleep(0.5)
-    malware_count += 1
 
-os.remove(download_path + "Malware_samples.json")
+
+for i in select_types:
+    os.remove(download_path + "Malware_samples_" + str(i) + ".json")
  
 print("\n")
 print("0.5 min later it will let you know how much files are left")
