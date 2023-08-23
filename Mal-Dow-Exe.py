@@ -105,8 +105,9 @@ if os.path.isdir(current_path + dir_name) != True:
 
 download_path = str(current_path) + "Samples/"
 
-download_file_json = requests.post('https://mb-api.abuse.ch/api/v1/', data={'query': 'get_file_type', 'file_type': 'exe', 'limit': malware_samples})
-open(download_path + "Malware_samples.json", 'wb').write(download_file_json.content)
+for i in select_types:
+    download_file_json = requests.post('https://mb-api.abuse.ch/api/v1/', data={'query': 'get_file_type', 'file_type': i, 'limit': malware_samples})
+    open(download_path + "Malware_samples" + str(i) + ".json", 'wb').write(download_file_json.content)
 
 malware_sha256_hash_list = []
 
