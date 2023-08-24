@@ -6,7 +6,8 @@ Important Note: This software downloads real malware. If you are unsure of how t
 
 Instructions:
 
-When using this tool, it automatically creates a "Sample" directory in the same location as the .py file. You can specify that the software is allowed to execute all .exe files found in this directory.
+When using this tool, it automatically creates a "Sample" directory in the same location as the .py file. 
+You can specify that the software is allowed to execute all .exe files found in this directory.
 
 Customization:
 
