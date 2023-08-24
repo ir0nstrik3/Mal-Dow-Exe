@@ -124,6 +124,7 @@ for sample, number in zip(select_types, samples_amount):
     time.sleep(5)
 malware_sha256_hash_list = []
 
+clear_console()
 
 for samples in select_types:
     json_file = open(download_path + "Malware_samples_" + str(samples) + ".json")
@@ -135,7 +136,7 @@ for samples in select_types:
     except ValueError:
         print("in one jason was an error and was skipped !")
 
-  
+clear_console()
 malware_count = 0
 
 while malware_count < int(len(malware_sha256_hash_list)):
