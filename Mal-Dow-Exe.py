@@ -86,24 +86,44 @@ clear_console()
 print("Your selected Malware Type's")            
 for i, option in enumerate(select_types):
     print(f"{i + 1}: {option}")
-time.sleep(2)
+time.sleep(1.5)
 
 clear_console()
 
 samples_amount = []
 
-for sample in select_types:
-    amount_input = input(f"How much Smaples of {sample}'s do you want: ")
-    clear_console()
-    while amount_input.isnumeric() == False:
-        amount_input = input(f"How much Smaples of {sample}'s do you want: ")
-        clear_console()
-    samples_amount.append(amount_input)
-    
-for sample, i in zip(select_types,samples_amount):
-    print(f"for type {sample} you choose {i} sample's")
+while len(samples_amount) != len(select_types):
+    samples_amount.append(0)
 
-time.sleep(5)
+while True:
+    clear_console()
+    
+    print("\nSelected Samples and his Amount")
+    for samples, amount in zip(enumerate(select_types), samples_amount):
+        print(f"{samples[0] + 1}: {samples[1]} has an Amount off : {amount}")
+    
+    choice_amount = input("\n Please choose a Number to set an Amount of Samples (with 'd' you can continue): ")
+    
+    if choice_amount.lower() == "d":
+        break
+    else:
+        try:
+            choice_amount = int(choice_amount)
+            if 1 <= choice_amount <= len(select_types):
+                choice_amount_option = choice_amount - 1
+                clear_console()
+                print(f"{select_types[choice_amount_option]} current Amount {samples_amount[choice_amount_option]}")
+                option_amount = input("\nPlease set the Number of Samples: ")
+                samples_amount[choice_amount_option] = int(option_amount)
+                clear_console
+            else:
+                print(f"Please choose a number between 1 and {len(select_types)}")
+                time.sleep(3)
+                
+        except ValueError:
+            print(f"Not Allowed, please enter an number between 1 and {len(select_types)}")
+            time.sleep(3)
+            
 clear_console()
 
 print("wait some time ...")         
