@@ -19,11 +19,9 @@ clear_console()
 while file_exe_validation not in vali_choices:
     file_exe_validation = input("please say Yes or No in uppercase Letters to automatic executing the samples: ")
     clear_console()
-
-    
+ 
 malware_types = ["exe", "doc", "xls", "dll", "msi", "ps1"]
 select_types = []
-
 
 while True:
     clear_console()
@@ -208,5 +206,4 @@ if file_exe_validation == yes_choice:
             time.sleep(5)
         else:
             no_executable_count += 1
-            print(f"Not executable files {no_executable_count}  !!", end="\r") 
-            
+            print(f"Not executable files {no_executable_count}  !!", end="\r")
